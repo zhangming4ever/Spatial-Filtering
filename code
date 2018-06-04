@@ -1,0 +1,90 @@
+盒状滤波
+close all
+Y4=imread('Fig0222(a)(face).tif');
+%盒状
+figure(1)
+imshow(Y4,[]);
+title('原图像')
+% 
+w1=1/9*ones(3);
+g1=imfilter(Y4,w1,'replicate');
+% g1=imboxfilt(Y4,3);
+figure(2)
+imshow(g1,[])
+title('m=3的盒状滤波模板平滑图像')
+ 
+figure(3)
+w2=1/81*ones(9);
+g2=imfilter(Y4,w2,'replicate');
+% g2=imboxfilt(Y4,9);
+imshow(g2,[])
+title('m=9的盒状滤波模板平滑图像')
+% 
+figure(4)
+w2=1/(25*25)*ones(25);
+g3=imfilter(Y4,w2,'replicate');
+% g3=imboxfilt(Y4,25);
+imshow(g3,[])
+title('m=25的盒状滤波模板平滑图像')
+
+高斯低通滤波
+Y5=im2double(Y);
+w1=fspecial('gaussian',15,10)
+g1=imfilter(Y5,w1,'replicate');
+g2 = imgaussfilt(Y,10,'FilterSize',15);
+figure(1)
+imshow(g1,[]);
+title('15阶&\sigma=10的高斯滤波模板处理后的图像')
+ 
+w1=fspecial('gaussian',25,10)
+g1=imfilter(Y5,w1,'replicate');
+g2 = imgaussfilt(Y,10,'FilterSize',25);
+figure(2)
+imshow(g1,[]);
+title('25阶&\sigma=10的高斯滤波模板处理后的图像')
+ 
+w1=fspecial('gaussian',35,10)
+g1=imfilter(Y5,w1,'replicate');
+g2 = imgaussfilt(Y,10,'FilterSize',35);
+figure(3)
+imshow(g1,[]);
+title('35阶&\sigma=10的高斯滤波模板处理后的图像')
+
+拉普拉斯模板滤波
+
+Y5=im2double(Y1);
+% % Y5=Y1;
+% w1=fspecial('laplacian',0)
+% % w1(2,2)
+% 
+% g1=imfilter(Y5,w1,'replicate');
+% figure(1)
+% imshow(Y5,[]);
+% title('原图像')
+% 
+% figure(2)
+% imshow(g1,[])
+% title('中心系数为-4的拉普拉斯模板处理后的图像')
+% 
+% figure(3)
+% imshow(Y5-g1)
+% title('原图与中心系数为-4模板处理图像的差值')
+w2=[0,-1,0;-1,5,-1;0,-1,0];
+w3=[-1,-1,-1;-1,9,-1;-1,-1,-1];
+w21=[0,1,0;1,-4,1;0,1,0];
+w31=[1,1,1;1,-8,1;1,1,1];
+ 
+g2=imfilter(Y5,w2,'replicate');
+g21=imfilter(Y5,w21,'replicate');
+figure(4)
+imshow(g2)
+title('中心系数为5的复合拉普拉斯模板处理后的图像')
+ 
+g3=imfilter(Y5,w3,'replicate');
+g31=imfilter(Y5,w31,'replicate');
+figure(5)
+imshow(g3)
+title('中心系数为9的复合拉普拉斯模板处理后的图像')
+ 
+figure(6)
+imshow((Y5-g31))
